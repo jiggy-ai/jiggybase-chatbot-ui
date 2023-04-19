@@ -297,7 +297,7 @@ const Home = ({
       });
     }
 
-    const apiKey = localStorage.getItem('apiKey');
+    const apiKey = localStorage.getItem('auth0Token');
 
     if (serverSideApiKeyIsSet) {
       dispatch({ field: 'apiKey', value: '' });

@@ -8,7 +8,7 @@ all: build-push
 build-push: build push
 
 build:
-	docker build -t $jiggyai/chatbot-ui:${TAG} .
+	docker build -t jiggyai/chatbot-ui:${TAG} .
 
 run:
 	export $(cat .env | xargs)
@@ -19,4 +19,4 @@ logs:
 	docker logs -f chatbot-ui
 
 push:
-	docker push $jiggyai/chatbot-ui:${TAG}
+	docker push jiggyai/chatbot-ui:${TAG}

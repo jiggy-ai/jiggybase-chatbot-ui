@@ -7,6 +7,8 @@ export const config = {
 };
 
 const handler = async (req: Request): Promise<Response> => {
+
+  console.log('models.ts')
   try {
     const { key } = (await req.json()) as {
       key: string;
