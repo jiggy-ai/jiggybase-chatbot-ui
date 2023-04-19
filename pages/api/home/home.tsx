@@ -29,7 +29,7 @@ import { getSettings } from '@/utils/app/settings';
 import { Conversation } from '@/types/chat';
 import { KeyValuePair } from '@/types/data';
 import { FolderInterface, FolderType } from '@/types/folder';
-import { OpenAIModelID, OpenAIModels, fallbackModelID } from '@/types/openai';
+import { OpenAIModelID, fallbackModelID } from '@/types/openai';
 import { Prompt } from '@/types/prompt';
 
 import { Chat } from '@/components/Chat/Chat';
@@ -106,6 +106,7 @@ const Home = ({
       conversations,
       selectedConversation,
       prompts,
+      models,
       temperature,
     },
     dispatch,
@@ -218,15 +219,17 @@ const Home = ({
   const handleNewConversation = () => {
     const lastConversation = conversations[conversations.length - 1];
 
+    const defaultModel = models[0]; // Access models directly from the state.
+
     const newConversation: Conversation = {
       id: uuidv4(),
       name: `${t('New Conversation')}`,
       messages: [],
       model: lastConversation?.model || {
-        id: OpenAIModels[defaultModelId].id,
-        name: OpenAIModels[defaultModelId].name,
-        maxLength: OpenAIModels[defaultModelId].maxLength,
-        tokenLimit: OpenAIModels[defaultModelId].tokenLimit,
+        id: defaultModel.id,
+        name: defaultModel.name,
+        maxLength: defaultModel.maxLength,
+        tokenLimit: defaultModel.tokenLimit,
       },
       prompt: DEFAULT_SYSTEM_PROMPT,
       temperature: lastConversation?.temperature ?? DEFAULT_TEMPERATURE,
@@ -369,7 +372,7 @@ const Home = ({
           id: uuidv4(),
           name: 'New conversation',
           messages: [],
-          model: OpenAIModels[defaultModelId],
+          model: models[0],
           prompt: DEFAULT_SYSTEM_PROMPT,
           temperature: lastConversation?.temperature ?? DEFAULT_TEMPERATURE,
           folderId: null,
