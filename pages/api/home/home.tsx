@@ -1,3 +1,4 @@
+import React from 'react';
 import { useEffect, useRef, useState } from 'react';
 import { useQuery } from 'react-query';
 
@@ -40,6 +41,7 @@ import HomeContext from './home.context';
 import { HomeInitialState, initialState } from './home.state';
 
 import { v4 as uuidv4 } from 'uuid';
+import { useAuth0 } from '@auth0/auth0-react';
 
 interface Props {
   serverSideApiKeyIsSet: boolean;
@@ -53,6 +55,42 @@ const Home = ({
   defaultModelId,
 }: Props) => {
   const { t } = useTranslation('chat');
+  // Add the useAuth0 hook
+  const {
+    isAuthenticated,
+    isLoading,
+    loginWithRedirect,
+    //getAccessTokenWithPopup,
+    getAccessTokenSilently,
+  } = useAuth0();
+  // Add a useEffect hook to call getTokenSilently when the user is authenticated
+  // Call loginWithRedirect when the page loads and the user is not authenticated
+  useEffect(() => {
+    if (!isLoading && !isAuthenticated) {
+      loginWithRedirect();
+    } 
+    if (isLoading) {
+      console.log("Auth0 is loading...");
+    } else {
+      if (isAuthenticated) {
+        console.log("User is authenticated.");
+        getToken();
+      } else {
+        console.log("User is not authenticated.");
+      }
+    }
+  }, [isAuthenticated, isLoading, loginWithRedirect]);
+
+  async function getToken() {
+    try {
+      const token = await getAccessTokenSilently();
+      console.log('Token:', token);
+      localStorage.setItem('auth0Token', token)
+    } catch (error) {
+      console.error('Error getting token:', error);
+    }
+  }
+
   const { getModels } = useApiService();
   const { getModelsError } = useErrorService();
   const [initialRender, setInitialRender] = useState<boolean>(true);
