@@ -391,7 +391,7 @@ export const ChatInput = ({
         </a>
         .{' '}
         {t(
-          "Chat about your documents.",
+          "Chat your documents.",
         )}
       </div>
       {/*

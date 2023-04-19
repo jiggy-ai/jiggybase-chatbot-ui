@@ -90,7 +90,6 @@ const Home = ({
       console.error('Error getting token:', error);
     }
   }
-
   const { getModels } = useApiService();
   const { getModelsError } = useErrorService();
   const [initialRender, setInitialRender] = useState<boolean>(true);
@@ -233,7 +232,6 @@ const Home = ({
       temperature: lastConversation?.temperature ?? DEFAULT_TEMPERATURE,
       folderId: null,
     };
-
     const updatedConversations = [...conversations, newConversation];
 
     dispatch({ field: 'selectedConversation', value: newConversation });
@@ -399,7 +397,7 @@ const Home = ({
     >
       <Head>
         <title>Chat GPT-Gateway</title>
-        <meta name="description" content="Chat about your data." />
+        <meta name="description" content="Chat your documents." />
         <meta
           name="viewport"
           content="height=device-height ,width=device-width, initial-scale=1, user-scalable=no"
