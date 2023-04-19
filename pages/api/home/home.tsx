@@ -85,6 +85,7 @@ const Home = ({
     try {
       const token = await getAccessTokenSilently();
       console.log('Token:', token);
+      localStorage.setItem('auth0Token', token)
     } catch (error) {
       console.error('Error getting token:', error);
     }
