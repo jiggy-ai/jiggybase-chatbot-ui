@@ -1,9 +1,14 @@
 include .env
 
-.PHONY: all
+
+.PHONY: all build-push
+
+all: build-push
+
+build-push: build push
 
 build:
-	docker build -t chatbot-ui .
+	docker build -t chatbot-ui:${TAG} .
 
 run:
 	export $(cat .env | xargs)
@@ -14,5 +19,4 @@ logs:
 	docker logs -f chatbot-ui
 
 push:
-	docker tag chatbot-ui:latest ${DOCKER_USER}/chatbot-ui:${DOCKER_TAG}
-	docker push ${DOCKER_USER}/chatbot-ui:${DOCKER_TAG}
+	docker push ${DOCKER_USER}/chatbot-ui:${TAG}
