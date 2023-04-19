@@ -223,7 +223,7 @@ const Home = ({
 
     const newConversation: Conversation = {
       id: uuidv4(),
-      name: `${t('New Conversation')}`,
+      name: t('New Conversation'),
       messages: [],
       model: lastConversation?.model || {
         id: defaultModel.id,
@@ -370,7 +370,7 @@ const Home = ({
         field: 'selectedConversation',
         value: {
           id: uuidv4(),
-          name: 'New conversation',
+          name: t('New Conversation'),
           messages: [],
           model: models[0],
           prompt: DEFAULT_SYSTEM_PROMPT,

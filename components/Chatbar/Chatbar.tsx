@@ -106,6 +106,8 @@ export const Chatbar = () => {
     });
     homeDispatch({ field: 'folders', value: folders });
     homeDispatch({ field: 'prompts', value: prompts });
+
+    window.location.reload();
   };
 
   const handleClearConversations = () => {
@@ -113,7 +115,7 @@ export const Chatbar = () => {
         field: 'selectedConversation',
         value: {
           id: uuidv4(),
-          name: 'New conversation',
+          name: t('New Conversation'),
           messages: [],
           model: models[0],
           prompt: DEFAULT_SYSTEM_PROMPT,
@@ -154,7 +156,7 @@ export const Chatbar = () => {
           field: 'selectedConversation',
           value: {
             id: uuidv4(),
-            name: 'New conversation',
+            name: t('New Conversation'),
             messages: [],
             model: models[0],
             prompt: DEFAULT_SYSTEM_PROMPT,
