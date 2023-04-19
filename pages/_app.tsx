@@ -19,7 +19,7 @@ function App({ Component, pageProps }: AppProps<{}>) {
       domain="auth.gpt-gateway.com"
       clientId="xJSTUXRLAyhp4gblxcUwgV6fLFuKzZRs"
       authorizationParams={{
-        redirect_uri: typeof window !== 'undefined' && window.location.origin,
+        redirect_uri: typeof window !== 'undefined' ? window.location.origin: undefined,
       }}
       //redirectUri={typeof window !== 'undefined' ? window.location.origin: undefined}
     >
