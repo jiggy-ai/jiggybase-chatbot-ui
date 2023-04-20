@@ -13,11 +13,12 @@ import { SidebarButton } from '../../Sidebar/SidebarButton';
 import ChatbarContext from '../Chatbar.context';
 import { ClearConversations } from './ClearConversations';
 import { PluginKeys } from './PluginKeys';
+import Link from 'next/link';
+import Image from 'next/image';
 
 export const ChatbarSettings = () => {
   const { t } = useTranslation('sidebar');
   const [isSettingDialogOpen, setIsSettingDialog] = useState<boolean>(false);
-
   const {
     state: {
       apiKey,
@@ -33,11 +34,12 @@ export const ChatbarSettings = () => {
     handleClearConversations,
     handleImportConversations,
     handleExportData,
+
     handleApiKeyChange,
   } = useContext(ChatbarContext);
 
   return (
-    <div className="flex flex-col items-center space-y-1 border-t border-white/20 pt-1 text-sm">
+    <div className="flex flex-col items-start space-y-1 border-t border-white/20 pt-1 text-sm">
       {conversations.length > 0 ? (
         <ClearConversations onClearConversations={handleClearConversations} />
       ) : null}
@@ -56,6 +58,25 @@ export const ChatbarSettings = () => {
         icon={<IconSettings size={18} />}
         onClick={() => setIsSettingDialog(true)}
       />
+      {/* Add the redirect button */}
+      <Link href="https://gpt-gateway.com/org" passHref>
+        <SidebarButton
+          text={t('Go to GPT Gateway')}
+          icon={
+            <div
+              className="flex justify-center items-center bg-white rounded-full"
+              style={{ width: 18, height: 18 }}
+            >
+            <Image
+              src="/favicon.ico" // Use the path to the favicon relative to the /public folder
+              alt="Favicon"
+              width={18}
+              height={18}
+            />
+            </div>
+          }
+        />
+      </Link>
       {/*
       {!serverSideApiKeyIsSet ? (
         <Key apiKey={apiKey} onApiKeyChange={handleApiKeyChange} />
