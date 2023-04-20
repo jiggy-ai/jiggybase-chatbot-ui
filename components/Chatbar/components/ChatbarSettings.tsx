@@ -59,7 +59,7 @@ export const ChatbarSettings = () => {
       />
       {/* Add the redirect button */}
       <SidebarButton
-        text={t('Go to GPT Gateway')}
+        text={t('Dashboard')}
         icon={
           <div
             className="flex justify-center items-center bg-white rounded-full"

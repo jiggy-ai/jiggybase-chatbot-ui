@@ -399,7 +399,7 @@ const Home = ({
       }}
     >
       <Head>
-        <title>Chat GPT-Gateway</title>
+        <title>Chat GPT Gateway</title>
         <meta name="description" content="Chat your documents." />
         <meta
           name="viewport"
