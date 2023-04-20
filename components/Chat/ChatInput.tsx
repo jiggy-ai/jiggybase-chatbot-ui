@@ -388,7 +388,7 @@ export const ChatInput = ({
           rel="noreferrer"
           className="underline"
         >
-          Chat GPT-Gateway
+          Chat GPT Gateway
         </a>
         .{' '}
         {t(
