@@ -13,7 +13,6 @@ import { SidebarButton } from '../../Sidebar/SidebarButton';
 import ChatbarContext from '../Chatbar.context';
 import { ClearConversations } from './ClearConversations';
 import { PluginKeys } from './PluginKeys';
-import Link from 'next/link';
 import Image from 'next/image';
 
 export const ChatbarSettings = () => {
@@ -59,24 +58,23 @@ export const ChatbarSettings = () => {
         onClick={() => setIsSettingDialog(true)}
       />
       {/* Add the redirect button */}
-      <Link href="https://gpt-gateway.com/org" passHref>
-        <SidebarButton
-          text={t('Go to GPT Gateway')}
-          icon={
-            <div
-              className="flex justify-center items-center bg-white rounded-full"
-              style={{ width: 18, height: 18 }}
-            >
-            <Image
-              src="/favicon.ico" // Use the path to the favicon relative to the /public folder
-              alt="Favicon"
-              width={18}
-              height={18}
-            />
-            </div>
-          }
-        />
-      </Link>
+      <SidebarButton
+        text={t('Go to GPT Gateway')}
+        icon={
+          <div
+            className="flex justify-center items-center bg-white rounded-full"
+            style={{ width: 18, height: 18 }}
+          >
+          <Image
+            src="/favicon.ico" // Use the path to the favicon relative to the /public folder
+            alt="Favicon"
+            width={18}
+            height={18}
+          />
+          </div>
+        }
+        onClick={() => window.open('https://gpt-gateway.com/org', '_blank')}
+      />
       {/*
       {!serverSideApiKeyIsSet ? (
         <Key apiKey={apiKey} onApiKeyChange={handleApiKeyChange} />
