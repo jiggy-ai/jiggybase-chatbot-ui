@@ -124,12 +124,16 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
           signal: controller.signal,
           body,
         });
-        console.log("response", response)
         if (!response.ok) {
+          console.log("chat.tsx endpoint", endpoint)
           console.log("response", response)
+          console.log("statusText", response.statusText)
           homeDispatch({ field: 'loading', value: false });
           homeDispatch({ field: 'messageIsStreaming', value: false });
-          toast.error(response.statusText);
+          //toast.error(response.statusText);
+          const errorData = await response.json();
+          toast.error(errorData.error);
+
           return;
         }
         const data = response.body;
