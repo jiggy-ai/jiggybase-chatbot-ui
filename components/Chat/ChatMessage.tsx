@@ -137,7 +137,7 @@ export const ChatMessage: FC<Props> = memo(({ message, messageIndex, onEdit }) =
         <div className="min-w-[40px] text-right font-bold">
           {message.role === 'assistant' ? (
             // <IconRobot size={30} /> 
-            <img src="/favicon.ico" alt="Favicon" style={{ width: "30px", height: "30px" }} />
+            <img src="/assistant.png" alt="Assistant" style={{ width: "30px", height: "30px" }} />
           ) : (
             <IconUser size={30} strokeWidth={2}/>
           )}
