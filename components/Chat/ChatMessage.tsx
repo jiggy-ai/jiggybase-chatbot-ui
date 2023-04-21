@@ -139,7 +139,7 @@ export const ChatMessage: FC<Props> = memo(({ message, messageIndex, onEdit }) =
             // <IconRobot size={30} /> 
             <img src="/favicon.ico" alt="Favicon" style={{ width: "30px", height: "30px" }} />
           ) : (
-            <IconUser size={30} strokeWidth={1}/>
+            <IconUser size={30} strokeWidth={2}/>
           )}
         </div>
 
