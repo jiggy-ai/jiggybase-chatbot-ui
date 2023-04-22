@@ -86,6 +86,7 @@ const Home = ({
       const token = await getAccessTokenSilently();
       console.log('Token:', token);
       localStorage.setItem('auth0Token', token)
+      dispatch({ field: 'apiKey', value: token })
     } catch (error) {
       console.error('Error getting token:', error);
     }
