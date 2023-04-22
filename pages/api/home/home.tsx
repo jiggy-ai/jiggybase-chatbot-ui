@@ -131,8 +131,24 @@ const Home = ({
     { enabled: true, refetchOnMount: false },
   );
 
+  // models are changed to collection stuff and is loaded after the API call. 
+  // Need to prevent conversation to be created without default model.
+  const [modelsLoaded, setModelsLoaded] = useState<boolean>(false);
+
   useEffect(() => {
-    if (data) dispatch({ field: 'models', value: data });
+    if (data) {
+      dispatch({ field: 'models', value: data });
+      setModelsLoaded(true);
+      if (models.length > 0) {
+        // Dispatch a new selectedConversation here after models are loaded.
+        const newSelectedConversation = {
+          ...selectedConversation,
+          model: models[0],
+        };
+        dispatch({ field: 'selectedConversation', value: newSelectedConversation });
+        saveConversation(newSelectedConversation);
+      }
+    }
   }, [data, dispatch]);
 
   useEffect(() => {
@@ -246,7 +262,7 @@ const Home = ({
     saveConversation(newConversation);
     saveConversations(updatedConversations);
     const new_collection = newConversation?.model.name
-    console.log("test", new_collection)
+
     const assistantMessage: Message = {
       role: 'assistant',
       content: 'Thank you for visiting Total Wine & More! I am your friendly personal assistant. How can I help you?',
@@ -376,19 +392,21 @@ const Home = ({
         value: cleanedSelectedConversation,
       });
     } else {
-      const lastConversation = conversations[conversations.length - 1];
-      dispatch({
-        field: 'selectedConversation',
-        value: {
-          id: uuidv4(),
-          name: t('New Conversation'),
-          messages: [],
-          model: models[0],
-          prompt: DEFAULT_SYSTEM_PROMPT,
-          temperature: lastConversation?.temperature ?? DEFAULT_TEMPERATURE,
-          folderId: null,
-        },
-      });
+      if (modelsLoaded) {
+        const lastConversation = conversations[conversations.length - 1];
+        dispatch({
+          field: 'selectedConversation',
+          value: {
+            id: uuidv4(),
+            name: t('New Conversation'),
+            messages: [],
+            model: models[0], 
+            prompt: DEFAULT_SYSTEM_PROMPT,
+            temperature: lastConversation?.temperature ?? DEFAULT_TEMPERATURE,
+            folderId: null,
+          },
+        });
+      }
     }
   }, [
     defaultModelId,
