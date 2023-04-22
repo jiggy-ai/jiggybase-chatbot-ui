@@ -372,6 +372,7 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
     if (
       selectedConversation &&
       selectedConversation.messages.length === 0 &&
+      selectedConversation.model &&
       selectedConversation.model.name.toLowerCase().includes('total wine')
     ) {
       const updatedConversation = {
