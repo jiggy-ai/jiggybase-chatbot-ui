@@ -42,7 +42,7 @@ import { HomeInitialState, initialState } from './home.state';
 
 import { v4 as uuidv4 } from 'uuid';
 import { useAuth0 } from '@auth0/auth0-react';
-import { Message, Role } from './types/chat';
+import { Message, Role } from '@/types/chat';
 
 interface Props {
   serverSideApiKeyIsSet: boolean;
