@@ -142,6 +142,7 @@ const Home = ({
       if (models.length > 0) {
         // Dispatch a new selectedConversation here after models are loaded.
         const newSelectedConversation = {
+          id: uuidv4(), // Generate a unique id using uuidv4()
           ...selectedConversation,
           model: models[0],
         };
