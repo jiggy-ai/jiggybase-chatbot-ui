@@ -353,6 +353,52 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
     };
   }, [messagesEndRef]);
 
+  {/* debug log
+  useEffect(() => {
+    if (selectedConversation) {
+      console.log("selectedConversation.model:",selectedConversation?.model.name);
+      console.log("selectedConversation.messages:", selectedConversation.messages);
+    }
+  }, [selectedConversation]);
+*/}
+  // added to hack first assistant message
+
+  const assistantMessage: Message = {
+    role: 'assistant',
+    content: 'Thank you for visiting Total Wine & More! I am your friendly personal assistant. How can I help you?',
+  };
+  
+  useEffect(() => {
+    if (
+      selectedConversation &&
+      selectedConversation.messages.length === 0 &&
+      selectedConversation.model.name.toLowerCase().includes('total wine')
+    ) {
+      const updatedConversation = {
+        ...selectedConversation,
+        messages: [assistantMessage],
+      };
+
+      homeDispatch({
+        field: 'selectedConversation',
+        value: updatedConversation,
+      });
+
+      const updatedConversations: Conversation[] = conversations.map(
+        (conversation) => {
+          if (conversation.id === selectedConversation.id) {
+            return updatedConversation;
+          }
+          return conversation;
+        },
+      );
+
+      homeDispatch({ field: 'conversations', value: updatedConversations });
+
+      saveConversations(updatedConversations);
+    }
+  }, [selectedConversation]);
+
   return (
     <div className="relative flex-1 overflow-hidden bg-white dark:bg-[#343541]">
       {!(apiKey || serverSideApiKeyIsSet) ? (
