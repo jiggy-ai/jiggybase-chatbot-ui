@@ -42,6 +42,7 @@ import { HomeInitialState, initialState } from './home.state';
 
 import { v4 as uuidv4 } from 'uuid';
 import { useAuth0 } from '@auth0/auth0-react';
+import { Message, Role } from './types/chat';
 
 interface Props {
   serverSideApiKeyIsSet: boolean;
@@ -236,6 +237,7 @@ const Home = ({
       temperature: lastConversation?.temperature ?? DEFAULT_TEMPERATURE,
       folderId: null,
     };
+
     const updatedConversations = [...conversations, newConversation];
 
     dispatch({ field: 'selectedConversation', value: newConversation });
@@ -243,7 +245,15 @@ const Home = ({
 
     saveConversation(newConversation);
     saveConversations(updatedConversations);
-
+    const new_collection = newConversation?.model.name
+    console.log("test", new_collection)
+    const assistantMessage: Message = {
+      role: 'assistant',
+      content: 'Thank you for visiting Total Wine & More! I am your friendly personal assistant. How can I help you?',
+    };
+    if (new_collection.toLowerCase().includes('total wine')) {
+      newConversation.messages.push(assistantMessage);
+    }
     dispatch({ field: 'loading', value: false });
   };
 
