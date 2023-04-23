@@ -132,8 +132,19 @@ const Home = ({
   );
 
   useEffect(() => {
-    if (data) dispatch({ field: 'models', value: data });
-  }, [data, dispatch]);
+    if (data) {
+      dispatch({ field: 'models', value: data });
+      if (selectedConversation && !selectedConversation.model) {
+        dispatch({
+          field: 'selectedConversation',
+          value: {
+            ...selectedConversation,
+            model: data[0],
+          },
+        });
+      }
+    } 
+}, [data, dispatch]);
 
   useEffect(() => {
     dispatch({ field: 'modelError', value: getModelsError(error) });
