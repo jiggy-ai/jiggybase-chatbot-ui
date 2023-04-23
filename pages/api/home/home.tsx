@@ -132,19 +132,24 @@ const Home = ({
   );
 
   useEffect(() => {
-    if (data) {
-      dispatch({ field: 'models', value: data });
+    if (data) dispatch({ field: 'models', value: data });
+  }, [data, dispatch]);
+
+  useEffect(() => {
+    console.log("update models", models)
+    if (models[0]) {
       if (selectedConversation && !selectedConversation.model) {
+        console.log("update selectedConv", selectedConversation.model, models[0])
         dispatch({
           field: 'selectedConversation',
           value: {
             ...selectedConversation,
-            model: data[0],
+            model: models[0],
           },
         });
       }
     } 
-}, [data, dispatch]);
+  }, [models]);
 
   useEffect(() => {
     dispatch({ field: 'modelError', value: getModelsError(error) });
