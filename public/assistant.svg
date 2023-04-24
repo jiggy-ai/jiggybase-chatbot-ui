@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <!-- Created with Vectornator (http://vectornator.io/) -->
-<svg height="100%" stroke-miterlimit="10" style="fill-rule:nonzero;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;" version="1.1" viewBox="0 0 512 512" width="100%" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:vectornator="http://vectornator.io" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg height="100%" stroke-miterlimit="10" style="fill-rule:nonzero;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;" version="1.1" viewBox="0 0 512 512" width="100%" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 <defs/>
-<g id="Layer-1" vectornator:layerName="Layer 1">
-<path d="M235.454 337.16L145.049 252.649L198.182 302.318C181.528 321.592 156.945 333.453 128.395 333.453C78.4346 333.453 38.7831 295.646 38.7831 249.684C38.7831 202.981 79.2276 165.914 128.395 165.914C152.979 165.914 174.391 174.069 194.217 192.602L257.659 251.908L321.102 311.214C340.927 329.747 362.339 337.901 386.923 337.901C436.884 337.901 476.536 300.094 476.536 254.132C476.536 207.428 436.091 170.362 386.923 170.362C358.374 170.362 333.79 182.224 317.137 201.498L371.856 252.649M277.485 163.69L371.063 251.166" fill="none" opacity="1" stroke="#282828" stroke-linecap="butt" stroke-linejoin="miter" stroke-width="43.3753" vectornator:layerName="path"/>
+<g id="Layer-1">
+<path d="M235.454 337.16L145.049 252.649L198.182 302.318C181.528 321.592 156.945 333.453 128.395 333.453C78.4346 333.453 38.7831 295.646 38.7831 249.684C38.7831 202.981 79.2276 165.914 128.395 165.914C152.979 165.914 174.391 174.069 194.217 192.602L257.659 251.908L321.102 311.214C340.927 329.747 362.339 337.901 386.923 337.901C428.503 337.901 462.943 311.714 473.327 276.433C475.42 269.322 476.536 261.842 476.536 254.132C476.536 207.428 436.091 170.362 386.923 170.362C358.374 170.362 333.79 182.224 317.137 201.498L371.856 252.649M277.485 163.69L371.063 251.166" fill="none" opacity="1" stroke="#808080" stroke-linecap="butt" stroke-linejoin="miter" stroke-width="43.3753"/>
 </g>
 </svg>
