@@ -16,7 +16,7 @@ function App({ Component, pageProps }: AppProps<{}>) {
 
   return (
     <Auth0Provider
-      domain="auth.gpt-gateway.com"
+      domain="auth.jiggy.ai"
       clientId="xJSTUXRLAyhp4gblxcUwgV6fLFuKzZRs"
       authorizationParams={{
         redirect_uri: typeof window !== 'undefined' ? window.location.origin: undefined,

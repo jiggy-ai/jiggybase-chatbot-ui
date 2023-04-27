@@ -73,7 +73,7 @@ export const ChatbarSettings = () => {
           />
           </div>
         }
-        onClick={() => window.open('https://gpt-gateway.com/org', '_blank')}
+        onClick={() => window.open('https://jiggy.ai/org', '_blank')}
       />
       {/*
       {!serverSideApiKeyIsSet ? (
