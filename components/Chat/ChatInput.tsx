@@ -381,6 +381,7 @@ export const ChatInput = ({
           )}
         </div>
       </div>
+      {/*
       <div className="px-3 pt-2 pb-3 text-center text-[12px] text-black/50 dark:text-white/50 md:px-4 md:pt-3 md:pb-6">
         <a
           href="https://jiggy.ai"
@@ -395,7 +396,7 @@ export const ChatInput = ({
           "Chat your documents.",
         )}
       </div>
-      {/*
+
       <div className="px-3 pt-2 pb-3 text-center text-[12px] text-black/50 dark:text-white/50 md:px-4 md:pt-3 md:pb-6">
         <a
           href="https://github.com/mckaywrigley/chatbot-ui"
