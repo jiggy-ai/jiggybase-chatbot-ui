@@ -292,7 +292,17 @@ export const Chat = memo(({ stopConversationRef }: Props) => {
 
   const handleSettings = () => {
     setShowSettings(!showSettings);
+    if (!showSettings) {
+      chatContainerRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   };
+
+  useEffect(() => {
+    if (showSettings) {
+      chatContainerRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }, [showSettings]);
+    
 
   const onClearAll = () => {
     if (
