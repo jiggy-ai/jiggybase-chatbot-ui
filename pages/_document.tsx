@@ -11,7 +11,7 @@ type Props = DocumentProps & {
 export default function Document(props: Props) {
   const currentLocale =
     props.__NEXT_DATA__.locale ?? i18nextConfig.i18n.defaultLocale;
-  const analyticsTrackingId = 'G-WQ986DBSZ';
+  const analyticsTrackingId = 'G-JZ1KCL9778';
 
   const gaScript = `
   window.dataLayer = window.dataLayer || [];
