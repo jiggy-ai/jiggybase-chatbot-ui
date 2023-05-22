@@ -8,7 +8,7 @@ all: build-push
 build-push: build push
 
 build:
-	docker build -t jiggyai/chatbot-ui:${TAG} .
+	docker buildx build --platform linux/amd64,linux/arm64 --push -t jiggyai/chatbot-ui:${TAG} .
 
 run:
 	export $(cat .env | xargs)
