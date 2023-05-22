@@ -43,6 +43,7 @@ import { HomeInitialState, initialState } from './home.state';
 import { v4 as uuidv4 } from 'uuid';
 import { useAuth0 } from '@auth0/auth0-react';
 import { Message, Role } from '@/types/chat';
+import { useRouter } from 'next/router';
 
 interface Props {
   serverSideApiKeyIsSet: boolean;
@@ -56,6 +57,7 @@ const Home = ({
   defaultModelId,
 }: Props) => {
   const { t } = useTranslation('chat');
+  const router = useRouter();
   // Add the useAuth0 hook
   const {
     isAuthenticated,
@@ -67,7 +69,9 @@ const Home = ({
   // Add a useEffect hook to call getTokenSilently when the user is authenticated
   // Call loginWithRedirect when the page loads and the user is not authenticated
   useEffect(() => {
-    if (!isLoading && !isAuthenticated) {
+    const errorDescription = router.query.error_description as string;
+
+    if (!isLoading && !isAuthenticated && !errorDescription) {
       loginWithRedirect();
     } 
     if (isLoading) {
@@ -80,7 +84,7 @@ const Home = ({
         console.log("User is not authenticated.");
       }
     }
-  }, [isAuthenticated, isLoading, loginWithRedirect]);
+  }, [isAuthenticated, isLoading, loginWithRedirect, router.query]);
 
   async function getToken() {
     try {

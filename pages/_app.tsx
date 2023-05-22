@@ -1,4 +1,4 @@
-import { Toaster } from 'react-hot-toast';
+import { Toaster, toast } from 'react-hot-toast';
 import { QueryClient, QueryClientProvider } from 'react-query';
 
 import { appWithTranslation } from 'next-i18next';
@@ -9,10 +9,22 @@ import '@/styles/globals.css';
 
 import { Auth0Provider } from '@auth0/auth0-react';
 
+import { useEffect } from 'react';
+import { useRouter } from 'next/router';
+
 const inter = Inter({ subsets: ['latin'] });
 
 function App({ Component, pageProps }: AppProps<{}>) {
   const queryClient = new QueryClient();
+  const router = useRouter();
+
+  useEffect(() => {
+    const errorDescription = router.query.error_description as string;
+
+    if (errorDescription && errorDescription.includes('Please verify your email')) {
+      toast.error('Please verify your email address before logging in through https://jiggy.ai again', { id: 'emailError' });
+    }
+  }, [router.query]);
 
   return (
     <Auth0Provider
