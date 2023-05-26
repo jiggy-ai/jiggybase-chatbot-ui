@@ -383,20 +383,18 @@ export const ChatInput = ({
       </div>
 
       <div className="px-3 pt-2 pb-3 text-center text-[12px] text-black/50 dark:text-white/50 md:px-4 md:pt-3 md:pb-6">
-        {/*
+        {t(
+          "JiggyBase is now available via ",
+        )}
         <a
-          href="https://jiggy.ai"
+          href="https://chat.openai.com/?model=gpt-4-plugins"
           target="_blank"
           rel="noreferrer"
           className="underline"
         >
-          Chat
+          ChatGPT Plugin
         </a>
         .{' '}
-          */}
-        {t(
-          "To protect your privacy, we do not save your chat conversations.",
-        )}
       </div>
       {/*
       <div className="px-3 pt-2 pb-3 text-center text-[12px] text-black/50 dark:text-white/50 md:px-4 md:pt-3 md:pb-6">
