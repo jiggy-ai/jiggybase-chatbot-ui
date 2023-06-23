@@ -2,21 +2,21 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   namespace: default
-  name: chatbot-ui
+  name: chatbot-ui-staging
   labels:
-    app: chatbot-ui
+    app: chatbot-ui-staging
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: chatbot-ui
+      app: chatbot-ui-staging
   template:
     metadata:
       labels:
-        app: chatbot-ui
+        app: chatbot-ui-staging
     spec:
       containers:
-        - name: chatbot-ui
+        - name: chatbot-ui-staging
           image: jiggyai/chatbot-ui:may26
           imagePullPolicy: Always            
           resources: {}
@@ -24,7 +24,7 @@ spec:
             - containerPort: 3000
           env:
             - name: OPENAI_API_HOST
-              value: https://api.gpt-gateway.com
+              value: https://api-staging.gpt-gateway.com
             - name: NEXT_PUBLIC_DEFAULT_TEMPERATURE
               value: "0.1"
       imagePullSecrets:
@@ -35,9 +35,9 @@ kind: Service
 apiVersion: v1
 metadata:
   namespace: default
-  name: chatbot-ui
+  name: chatbot-ui-staging
   labels:
-    app: chatbot-ui
+    app: chatbot-ui-staging
 spec:
   ports:
     - name: http
@@ -45,5 +45,5 @@ spec:
       port: 80
       targetPort: 3000
   selector:
-    app: chatbot-ui
+    app: chatbot-ui-staging
   type: ClusterIP
