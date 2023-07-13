@@ -144,7 +144,7 @@ const Home = ({
         },
       });
     }
-  }, [models]);
+  }, [models, selectedConversation, dispatch]);
 
   // FETCH MODELS ----------------------------------------------
 
