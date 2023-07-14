@@ -1,14 +1,12 @@
-import React from 'react';
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useQuery } from 'react-query';
-
 import { GetServerSideProps } from 'next';
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Head from 'next/head';
 
-import { useCreateReducer } from '@/hooks/useCreateReducer';
 
+import { useCreateReducer } from '@/hooks/useCreateReducer';
 import useErrorService from '@/services/errorService';
 import useApiService from '@/services/useApiService';
 
@@ -39,11 +37,10 @@ import Promptbar from '@/components/Promptbar';
 
 import HomeContext from './home.context';
 import { HomeInitialState, initialState } from './home.state';
-
 import { v4 as uuidv4 } from 'uuid';
 import { useAuth0 } from '@auth0/auth0-react';
-import { Message, Role } from '@/types/chat';
 import { useRouter } from 'next/router';
+import { Message, Role } from '@/types/chat';
 
 interface Props {
   serverSideApiKeyIsSet: boolean;
@@ -58,30 +55,27 @@ const Home = ({
 }: Props) => {
   const { t } = useTranslation('chat');
   const router = useRouter();
-  // Add the useAuth0 hook
   const {
     isAuthenticated,
     isLoading,
     loginWithRedirect,
-    //getAccessTokenWithPopup,
     getAccessTokenSilently,
   } = useAuth0();
-  // Add a useEffect hook to call getTokenSilently when the user is authenticated
-  // Call loginWithRedirect when the page loads and the user is not authenticated
+
   useEffect(() => {
     const errorDescription = router.query.error_description as string;
 
     if (!isLoading && !isAuthenticated && !errorDescription) {
       loginWithRedirect();
-    } 
+    }
     if (isLoading) {
-      console.log("Auth0 is loading...");
+      console.log('Auth0 is loading...');
     } else {
       if (isAuthenticated) {
-        console.log("User is authenticated.");
+        console.log('User is authenticated.');
         getToken();
       } else {
-        console.log("User is not authenticated.");
+        console.log('User is not authenticated.');
       }
     }
   }, [isAuthenticated, isLoading, loginWithRedirect, router.query]);
@@ -90,12 +84,13 @@ const Home = ({
     try {
       const token = await getAccessTokenSilently();
       console.log('Token:', token);
-      localStorage.setItem('auth0Token', token)
-      dispatch({ field: 'apiKey', value: token })
+      localStorage.setItem('auth0Token', token);
+      dispatch({ field: 'apiKey', value: token });
     } catch (error) {
       console.error('Error getting token:', error);
     }
   }
+
   const { getModels } = useApiService();
   const { getModelsError } = useErrorService();
   const [initialRender, setInitialRender] = useState<boolean>(true);
@@ -120,44 +115,36 @@ const Home = ({
 
   const stopConversationRef = useRef<boolean>(false);
 
-  const { data, error, refetch } = useQuery(
-    ['GetModels', apiKey, serverSideApiKeyIsSet],
-    ({ signal }) => {
-      if (!apiKey && !serverSideApiKeyIsSet) return null;
-
-      return getModels(
-        {
-          key: apiKey,
-        },
-        signal,
-      );
-    },
-    { enabled: true, refetchOnMount: false },
-  );
-
+  // Fetch models
   useEffect(() => {
-    if (data) dispatch({ field: 'models', value: data });
-  }, [data, dispatch]);
+    if (!apiKey && !serverSideApiKeyIsSet) return;
 
-  useEffect(() => {
-    console.log("update models", models)
-    if (models[0]) {
-      if (selectedConversation && !selectedConversation.model) {
-        console.log("update selectedConv", selectedConversation.model, models[0])
-        dispatch({
-          field: 'selectedConversation',
-          value: {
-            ...selectedConversation,
-            model: models[0],
-          },
-        });
+    const fetchModels = async () => {
+      try {
+        const data = await getModels({ key: apiKey });
+        dispatch({ field: 'models', value: data });
+      } catch (error) {
+        dispatch({ field: 'modelError', value: getModelsError(error) });
       }
-    } 
-  }, [models]);
+    };
 
+    fetchModels();
+  }, [apiKey, getModels, getModelsError, serverSideApiKeyIsSet, dispatch]);
+
+  // Update selected conversation model
   useEffect(() => {
-    dispatch({ field: 'modelError', value: getModelsError(error) });
-  }, [dispatch, error, getModelsError]);
+    // console.log("update models", models)
+    if (models[0] && selectedConversation && !selectedConversation.model) {
+      console.log("update selectedConv", selectedConversation.model, models[0])
+      dispatch({
+        field: 'selectedConversation',
+        value: {
+          ...selectedConversation,
+          model: models[0],
+        },
+      });
+    }
+  }, [models, selectedConversation, dispatch]);
 
   // FETCH MODELS ----------------------------------------------
 
@@ -235,8 +222,8 @@ const Home = ({
 
     saveFolders(updatedFolders);
   };
+    // CONVERSATION OPERATIONS  --------------------------------------------
 
-  // CONVERSATION OPERATIONS  --------------------------------------------
 
   const handleNewConversation = () => {
     const lastConversation = conversations[conversations.length - 1];
@@ -260,21 +247,23 @@ const Home = ({
 
     const updatedConversations = [...conversations, newConversation];
 
-    dispatch({ field: 'selectedConversation', value: newConversation });
-    dispatch({ field: 'conversations', value: updatedConversations });
-
     saveConversation(newConversation);
     saveConversations(updatedConversations);
-    const new_collection = newConversation?.model.name
+
+    const new_collection = newConversation.model.name;
     console.log("test", new_collection)
     const assistantMessage: Message = {
       role: 'assistant',
       content: 'Thank you for visiting Total Wine & More! I am your friendly personal assistant. How can I help you?',
     };
+
     if (new_collection.toLowerCase().includes('total wine')) {
       newConversation.messages.push(assistantMessage);
     }
+
     dispatch({ field: 'loading', value: false });
+    dispatch({ field: 'selectedConversation', value: newConversation });
+    dispatch({ field: 'conversations', value: updatedConversations });
   };
 
   const handleUpdateConversation = (
@@ -294,31 +283,6 @@ const Home = ({
     dispatch({ field: 'selectedConversation', value: single });
     dispatch({ field: 'conversations', value: all });
   };
-
-  // EFFECTS  --------------------------------------------
-
-  useEffect(() => {
-    if (window.innerWidth < 640) {
-      dispatch({ field: 'showChatbar', value: false });
-    }
-  }, [selectedConversation]);
-
-  useEffect(() => {
-    defaultModelId &&
-      dispatch({ field: 'defaultModelId', value: defaultModelId });
-    serverSideApiKeyIsSet &&
-      dispatch({
-        field: 'serverSideApiKeyIsSet',
-        value: serverSideApiKeyIsSet,
-      });
-    serverSidePluginKeysSet &&
-      dispatch({
-        field: 'serverSidePluginKeysSet',
-        value: serverSidePluginKeysSet,
-      });
-  }, [defaultModelId, serverSideApiKeyIsSet, serverSidePluginKeysSet]);
-
-  // ON LOAD --------------------------------------------
 
   useEffect(() => {
     const settings = getSettings();
@@ -417,6 +381,21 @@ const Home = ({
     serverSidePluginKeysSet,
   ]);
 
+  useEffect(() => {
+    defaultModelId &&
+      dispatch({ field: 'defaultModelId', value: defaultModelId });
+    serverSideApiKeyIsSet &&
+      dispatch({
+        field: 'serverSideApiKeyIsSet',
+        value: serverSideApiKeyIsSet,
+      });
+    serverSidePluginKeysSet &&
+      dispatch({
+        field: 'serverSidePluginKeysSet',
+        value: serverSidePluginKeysSet,
+      });
+  }, [defaultModelId, serverSideApiKeyIsSet, serverSidePluginKeysSet]);
+
   return (
     <HomeContext.Provider
       value={{
@@ -463,39 +442,6 @@ const Home = ({
     </HomeContext.Provider>
   );
 };
+
 export default Home;
 
-export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
-  const defaultModelId =
-    (process.env.DEFAULT_MODEL &&
-      Object.values(OpenAIModelID).includes(
-        process.env.DEFAULT_MODEL as OpenAIModelID,
-      ) &&
-      process.env.DEFAULT_MODEL) ||
-    fallbackModelID;
-
-  let serverSidePluginKeysSet = false;
-
-  const googleApiKey = process.env.GOOGLE_API_KEY;
-  const googleCSEId = process.env.GOOGLE_CSE_ID;
-
-  if (googleApiKey && googleCSEId) {
-    serverSidePluginKeysSet = true;
-  }
-
-  return {
-    props: {
-      serverSideApiKeyIsSet: !!process.env.OPENAI_API_KEY,
-      defaultModelId,
-      serverSidePluginKeysSet,
-      ...(await serverSideTranslations(locale ?? 'en', [
-        'common',
-        'chat',
-        'sidebar',
-        'markdown',
-        'promptbar',
-        'settings',
-      ])),
-    },
-  };
-};
