@@ -90,6 +90,11 @@ export const OpenAIStream = async (
         if (event.type === 'event') {
           const data = event.data;
 
+          const trimmedLine = data.trim();
+          if (trimmedLine === '[DONE]') {
+            return;
+          }
+  
           try {
             const json = JSON.parse(data);
             if (json.choices[0].finish_reason != null) {
